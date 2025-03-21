@@ -65,7 +65,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         city = self.city_ui_options[user_input[CITY_UI_OPTION]]
         _LOGGER.info("user_input: %s; city: %s", user_input, city)
         return self.async_create_entry(
-            title=user_input[USERNAME],
+            title=user_input[USERNAME_UI_OPTION],
             data={
                 USERNAME: user_input[USERNAME_UI_OPTION],
                 PASSWORD: user_input[PASSWORD_UI_OPTION],
