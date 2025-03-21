@@ -5,20 +5,20 @@ from typing import Any
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from custom_components.mclaut_balance_checker.const import DOMAIN, UPDATE_INTERVAL, USERNAME, PASSWORD, CITY_ID, \
-    CITY_NAME
+from custom_components.mclaut_balance_checker.const import DOMAIN, UPDATE_INTERVAL, USERNAME, PASSWORD, CITY_ID, CITY_NAME
 from custom_components.mclaut_balance_checker.mclaut_api import McLautApi
 
 _LOGGER = logging.getLogger(__name__)
 
 class McLautBalanceCheckerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
-    def __init__(self, data: dict[str, Any], hass: HomeAssistant):
+    def __init__(self, hass: HomeAssistant, data: dict[str, Any]):
         super().__init__(
             hass=hass,
             name=DOMAIN,
             logger=_LOGGER,
             update_interval=timedelta(minutes=UPDATE_INTERVAL)
         )
+        _LOGGER.info("McLautBalanceCheckerCoordinator init with data: %s", data)
         self.mclaut_api = McLautApi({
             USERNAME: data[USERNAME],
             PASSWORD: data[PASSWORD],

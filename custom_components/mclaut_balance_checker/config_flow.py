@@ -25,7 +25,9 @@ async def validate_input(hass: HomeAssistant, data: dict) -> dict[str, Any]:
     Data has the keys from USER_SCHEMA with values provided by the user.
     """
 
-    coordinator = McLautBalanceCheckerCoordinator(data, hass)
+    _LOGGER.info("validating input: %s", data)
+
+    coordinator = McLautBalanceCheckerCoordinator(hass, data)
     # await coordinator.async_validate_input()
 
     return {"title": "McLaut Balance Checker"}
