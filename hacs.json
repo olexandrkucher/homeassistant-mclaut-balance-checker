@@ -1,0 +1,8 @@
+{
+  "name": "McLaut Balance Checker",
+  "content_in_root": false,
+  "country": "UA",
+  "homeassistant": "2025.3.3",
+  "filename": "custom_components/mclaut_balance_checker/__init__.py",
+  "render_readme": true
+}
