@@ -6,6 +6,21 @@ import requests
 _LOGGER = logging.getLogger(__name__)
 
 
+class City:
+    def __init__(self, city_id: int, city_name: str, human_readable_city_name: str):
+        self.city_id = city_id
+        self.city_name = city_name
+        self.human_readable_city_name = human_readable_city_name
+
+    @staticmethod
+    def from_dict(data: dict) -> "City":
+        return City(
+            city_id=data["city_id"],
+            city_name=data["city_name"],
+            human_readable_city_name=data["human_readable_city_name"]
+        )
+
+
 class McLautCredentials:
     def __init__(self, username: str, password: str, city_id: int, city_name: str):
         self.username = username

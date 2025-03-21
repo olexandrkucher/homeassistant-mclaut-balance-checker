@@ -1,0 +1,622 @@
+[
+  {
+    "city_id": 1,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "м. Черкаси"
+  },
+  {
+    "city_id": 2,
+    "city_name": "smila",
+    "human_readable_city_name": "м. Сміла"
+  },
+  {
+    "city_id": 3,
+    "city_name": "kaniv",
+    "human_readable_city_name": "м. Канів"
+  },
+  {
+    "city_id": 4,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "м. Золотоноша"
+  },
+  {
+    "city_id": 5,
+    "city_name": "pereyaslav",
+    "human_readable_city_name": "м. Переяслав"
+  },
+  {
+    "city_id": 6,
+    "city_name": "vatutino",
+    "human_readable_city_name": "м. Ватутіне"
+  },
+  {
+    "city_id": 7,
+    "city_name": "zvenigorodka",
+    "human_readable_city_name": "м. Звенигородка"
+  },
+  {
+    "city_id": 8,
+    "city_name": "shpola",
+    "human_readable_city_name": "м. Шпола"
+  },
+  {
+    "city_id": 9,
+    "city_name": "korsyn",
+    "human_readable_city_name": "м. Корсунь-Шевченківський"
+  },
+  {
+    "city_id": 10,
+    "city_name": "talne",
+    "human_readable_city_name": "м. Тальне"
+  },
+  {
+    "city_id": 11,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Червона Слобода"
+  },
+  {
+    "city_id": 12,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Леськи"
+  },
+  {
+    "city_id": 13,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "с. Вознесенське"
+  },
+  {
+    "city_id": 14,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Свидівок"
+  },
+  {
+    "city_id": 15,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Геронимівка"
+  },
+  {
+    "city_id": 16,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Білозір'я"
+  },
+  {
+    "city_id": 17,
+    "city_name": "zvenigorodka",
+    "human_readable_city_name": "с. Стебне"
+  },
+  {
+    "city_id": 22,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Дубіївка"
+  },
+  {
+    "city_id": 25,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "c. Худяки"
+  },
+  {
+    "city_id": 26,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Руська Поляна"
+  },
+  {
+    "city_id": 27,
+    "city_name": "vatutino",
+    "human_readable_city_name": "с. Юрківка"
+  },
+  {
+    "city_id": 28,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "с. Згар"
+  },
+  {
+    "city_id": 29,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "с. Нова Дмитрівка"
+  },
+  {
+    "city_id": 30,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Сагунівка"
+  },
+  {
+    "city_id": 31,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Мошни"
+  },
+  {
+    "city_id": 32,
+    "city_name": "vatutino",
+    "human_readable_city_name": "с. Стецівка"
+  },
+  {
+    "city_id": 34,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Сокирно"
+  },
+  {
+    "city_id": 35,
+    "city_name": "kaniv",
+    "human_readable_city_name": "c. Гельмязев"
+  },
+  {
+    "city_id": 36,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Софіївка"
+  },
+  {
+    "city_id": 37,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Теклине"
+  },
+  {
+    "city_id": 38,
+    "city_name": "smila",
+    "human_readable_city_name": "c. Орловець"
+  },
+  {
+    "city_id": 39,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Будище"
+  },
+  {
+    "city_id": 40,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Новоселівка"
+  },
+  {
+    "city_id": 41,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Лозівок"
+  },
+  {
+    "city_id": 42,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Єлизаветівка"
+  },
+  {
+    "city_id": 44,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Балаклея"
+  },
+  {
+    "city_id": 45,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Костянтинівка"
+  },
+  {
+    "city_id": 46,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Будо-Орловецька"
+  },
+  {
+    "city_id": 47,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Мале Старосілля"
+  },
+  {
+    "city_id": 48,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Березняки"
+  },
+  {
+    "city_id": 49,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Велика Яблунівка"
+  },
+  {
+    "city_id": 50,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Келеберда"
+  },
+  {
+    "city_id": 51,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Ліпляве"
+  },
+  {
+    "city_id": 52,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Сунки"
+  },
+  {
+    "city_id": 53,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Залевки"
+  },
+  {
+    "city_id": 54,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Степанці"
+  },
+  {
+    "city_id": 55,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Пилява"
+  },
+  {
+    "city_id": 56,
+    "city_name": "vatutino",
+    "human_readable_city_name": "с. Єрки"
+  },
+  {
+    "city_id": 57,
+    "city_name": "vatutino",
+    "human_readable_city_name": "с. Скаливатка"
+  },
+  {
+    "city_id": 58,
+    "city_name": "vatutino",
+    "human_readable_city_name": "с. Залізнячка"
+  },
+  {
+    "city_id": 59,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Будки"
+  },
+  {
+    "city_id": 60,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Плоске"
+  },
+  {
+    "city_id": 61,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "м. Чорнобай"
+  },
+  {
+    "city_id": 69,
+    "city_name": "zvenigorodka",
+    "human_readable_city_name": "смт. Лисянка"
+  },
+  {
+    "city_id": 70,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Райгород"
+  },
+  {
+    "city_id": 71,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Таганча"
+  },
+  {
+    "city_id": 72,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Мельники"
+  },
+  {
+    "city_id": 73,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Мартинівка"
+  },
+  {
+    "city_id": 74,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Ключники"
+  },
+  {
+    "city_id": 75,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Дарівка"
+  },
+  {
+    "city_id": 76,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Голяки"
+  },
+  {
+    "city_id": 77,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Вергуни"
+  },
+  {
+    "city_id": 78,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Думанці"
+  },
+  {
+    "city_id": 79,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Нечаївка"
+  },
+  {
+    "city_id": 80,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с Бузуків"
+  },
+  {
+    "city_id": 81,
+    "city_name": "smila",
+    "human_readable_city_name": "м. Кам'янка"
+  },
+  {
+    "city_id": 82,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Жаботин"
+  },
+  {
+    "city_id": 83,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Флярківка"
+  },
+  {
+    "city_id": 84,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Михайлівка"
+  },
+  {
+    "city_id": 91,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Косарі"
+  },
+  {
+    "city_id": 92,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Ребедайлівка"
+  },
+  {
+    "city_id": 93,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Ревівка"
+  },
+  {
+    "city_id": 94,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Пляківка"
+  },
+  {
+    "city_id": 95,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Юрчиха"
+  },
+  {
+    "city_id": 97,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Грушківка"
+  },
+  {
+    "city_id": 98,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Степанки"
+  },
+  {
+    "city_id": 99,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Хацьки"
+  },
+  {
+    "city_id": 100,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "с. Кропивна"
+  },
+  {
+    "city_id": 101,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "с. Деньги"
+  },
+  {
+    "city_id": 102,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "с. Маліївка"
+  },
+  {
+    "city_id": 103,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Баландине"
+  },
+  {
+    "city_id": 104,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Вербівка"
+  },
+  {
+    "city_id": 105,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Лебедівка"
+  },
+  {
+    "city_id": 106,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Копійчана"
+  },
+  {
+    "city_id": 107,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Ярове"
+  },
+  {
+    "city_id": 108,
+    "city_name": "korsyn",
+    "human_readable_city_name": "с. Гарбузин"
+  },
+  {
+    "city_id": 109,
+    "city_name": "korsyn",
+    "human_readable_city_name": "с. Листвина"
+  },
+  {
+    "city_id": 110,
+    "city_name": "korsyn",
+    "human_readable_city_name": "с. Саморідня"
+  },
+  {
+    "city_id": 111,
+    "city_name": "korsyn",
+    "human_readable_city_name": "с. Карашина"
+  },
+  {
+    "city_id": 112,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "с. Крупське"
+  },
+  {
+    "city_id": 113,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "с. Щербинівка"
+  },
+  {
+    "city_id": 114,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "с. Синьооківка"
+  },
+  {
+    "city_id": 115,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "с. Богуславець"
+  },
+  {
+    "city_id": 117,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "с. Канівщина"
+  },
+  {
+    "city_id": 118,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "с. Пальміра"
+  },
+  {
+    "city_id": 119,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Піщане"
+  },
+  {
+    "city_id": 120,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Благодатне"
+  },
+  {
+    "city_id": 121,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Чехівка"
+  },
+  {
+    "city_id": 122,
+    "city_name": "smila",
+    "human_readable_city_name": "м. Городище"
+  },
+  {
+    "city_id": 123,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Дирдин"
+  },
+  {
+    "city_id": 124,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Хлистунівка"
+  },
+  {
+    "city_id": 125,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Мліїв"
+  },
+  {
+    "city_id": 126,
+    "city_name": "smila",
+    "human_readable_city_name": "с. Набоків"
+  },
+  {
+    "city_id": 127,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Хутори"
+  },
+  {
+    "city_id": 128,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Крутьки"
+  },
+  {
+    "city_id": 129,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Мельники (Золотоніський р-н)"
+  },
+  {
+    "city_id": 130,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Воронинці"
+  },
+  {
+    "city_id": 131,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Іркліїв"
+  },
+  {
+    "city_id": 132,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Скородистик"
+  },
+  {
+    "city_id": 133,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Загородище"
+  },
+  {
+    "city_id": 134,
+    "city_name": "cherkassy",
+    "human_readable_city_name": "с. Червоногірка"
+  },
+  {
+    "city_id": 135,
+    "city_name": "vatutino",
+    "human_readable_city_name": "смт. Катеринопіль"
+  },
+  {
+    "city_id": 136,
+    "city_name": "vatutino",
+    "human_readable_city_name": "с. Бродецьке"
+  },
+  {
+    "city_id": 137,
+    "city_name": "vatutino",
+    "human_readable_city_name": "с. Гуляйполе"
+  },
+  {
+    "city_id": 138,
+    "city_name": "vatutino",
+    "human_readable_city_name": "с. Новоселиця"
+  },
+  {
+    "city_id": 139,
+    "city_name": "vatutino",
+    "human_readable_city_name": "с. Розсохуватка"
+  },
+  {
+    "city_id": 140,
+    "city_name": "vatutino",
+    "human_readable_city_name": "с. Шостакове"
+  },
+  {
+    "city_id": 141,
+    "city_name": "zolotonosha",
+    "human_readable_city_name": "с. Хвильово-Сорочин"
+  },
+  {
+    "city_id": 142,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Поташня"
+  },
+  {
+    "city_id": 143,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Прохорівка"
+  },
+  {
+    "city_id": 144,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Бубнівська Слобідка"
+  },
+  {
+    "city_id": 145,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Гладківщина"
+  },
+  {
+    "city_id": 146,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Сушки"
+  },
+  {
+    "city_id": 147,
+    "city_name": "kaniv",
+    "human_readable_city_name": "с. Шабельники"
+  }
+]
