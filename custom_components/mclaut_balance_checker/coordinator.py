@@ -5,7 +5,8 @@ from typing import Any
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from custom_components.mclaut_balance_checker.const import DOMAIN, UPDATE_INTERVAL
+from custom_components.mclaut_balance_checker.const import DOMAIN, UPDATE_INTERVAL, USERNAME, PASSWORD, CITY_ID, \
+    CITY_NAME
 from custom_components.mclaut_balance_checker.mclaut_api import McLautApi
 
 _LOGGER = logging.getLogger(__name__)
@@ -19,10 +20,10 @@ class McLautBalanceCheckerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             update_interval=timedelta(minutes=UPDATE_INTERVAL)
         )
         self.mclaut_api = McLautApi({
-            'username': data['username'],
-            'password': data['password'],
-            'city_id': data['city_id'],
-            'city_name': data['city_name']
+            USERNAME: data[USERNAME],
+            PASSWORD: data[PASSWORD],
+            CITY_ID: data[CITY_ID],
+            CITY_NAME: data[CITY_NAME]
         })
 
     async def _async_update_data(self):

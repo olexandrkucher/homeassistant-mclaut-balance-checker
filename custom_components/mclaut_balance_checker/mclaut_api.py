@@ -2,6 +2,8 @@ import re
 
 import requests
 
+from custom_components.mclaut_balance_checker.const import USERNAME, CITY_ID, PASSWORD, CITY_NAME
+
 
 class McLautApi:
     def __init__(self, credentials):
@@ -24,8 +26,8 @@ class McLautApi:
             self.login()
             print('Integration has been logged in before loading data')
 
-        general_data = self._load_general_data(self.credentials['city_name'])
-        balance_data = self._load_balance_data(self.credentials['city_name'])
+        general_data = self._load_general_data(self.credentials[CITY_NAME])
+        balance_data = self._load_balance_data(self.credentials[CITY_NAME])
         return {
             'staticData': {
                 'dailyCost': balance_data['dailyCost'],
@@ -40,8 +42,8 @@ class McLautApi:
         }
 
     def _is_logged(self):
-        response = self._do_post(f"https://bill.mclaut.com/client/{self.credentials['city_name']}", {}, self.cookies)
-        return self.credentials['username'] in response.text
+        response = self._do_post(f"https://bill.mclaut.com/client/{self.credentials[CITY_NAME]}", {}, self.cookies)
+        return self.credentials[USERNAME] in response.text
 
     def _load_general_data(self, city):
         response = self._do_post(f"https://bill.mclaut.com/client/{city}", {}, self.cookies)
@@ -73,9 +75,9 @@ class McLautApi:
 
     def _prepare_login_data(self):
         return {
-            'login': f'"{self.credentials["username"]}"',
-            'pass': f'"{self.credentials["password"]}"',
-            'city': self.credentials['city_id'],
+            'login': f'"{self.credentials[USERNAME]}"',
+            'pass': f'"{self.credentials[PASSWORD]}"',
+            'city': self.credentials[CITY_ID],
             'query': 'ajax',
             'app': 'client',
             'module': 'auth',
