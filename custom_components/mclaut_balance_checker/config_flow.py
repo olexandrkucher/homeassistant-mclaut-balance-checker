@@ -57,7 +57,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             user_input[CITY_ID] = city.city_id
             user_input[CITY_NAME] = city.city_name
 
-            return self.async_create_entry(title=selected_human_name, data=user_input)
+            return self.async_create_entry(title=user_input[USERNAME], data=user_input)
 
         return self.async_show_form(
             step_id="user",

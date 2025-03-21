@@ -1,7 +1,7 @@
 import logging
 import re
 
-import requests
+from custom_components.mclaut_balance_checker.coordinator import AsyncHttpClient
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -30,28 +30,29 @@ class McLautCredentials:
 
 
 class McLautApi:
-    def __init__(self, credentials: McLautCredentials):
+    def __init__(self, credentials: McLautCredentials, client: AsyncHttpClient):
         self.cookies = None
+        self.client = client
         self.credentials = credentials
 
-    def login(self):
-        if self._is_logged():
+    async def login(self):
+        if await self._is_logged():
             _LOGGER.info('Existing integration session has been found, no need to login')
         else:
-            response = self._do_post('https://bill.mclaut.com/index.php', self._prepare_login_data(), self.cookies)
+            response = await self.client.do_post('https://bill.mclaut.com/index.php', self._prepare_login_data(), self.cookies)
             response_json = response.json()
             if response_json['resultCode'] == 0:
                 raise Exception(f"Login failed: {response_json['resultCode']}")
             else:
                 self.cookies = response.cookies
 
-    def load_all_data(self):
-        if not self._is_logged():
-            self.login()
+    async def load_all_data(self):
+        if not await self._is_logged():
+            await self.login()
             _LOGGER.info('Integration has been logged in before loading data')
 
-        general_data = self._load_general_data(self.credentials.city_name)
-        balance_data = self._load_balance_data(self.credentials.city_name)
+        general_data = await self._load_general_data(self.credentials.city_name)
+        balance_data = await self._load_balance_data(self.credentials.city_name)
         return {
             'staticData': {
                 'dailyCost': balance_data['dailyCost'],
@@ -65,12 +66,12 @@ class McLautApi:
             }
         }
 
-    def _is_logged(self):
-        response = self._do_post(f"https://bill.mclaut.com/client/{self.credentials.city_name}", {}, self.cookies)
+    async def _is_logged(self):
+        response = await self.client.do_post(f"https://bill.mclaut.com/client/{self.credentials.city_name}", {}, self.cookies)
         return self.credentials.username in response.text
 
-    def _load_general_data(self, city):
-        response = self._do_post(f"https://bill.mclaut.com/client/{city}", {}, self.cookies)
+    async def _load_general_data(self, city):
+        response = await self.client.do_post(f"https://bill.mclaut.com/client/{city}", {}, self.cookies)
         return self._parse_general_data(response.text)
 
     def _parse_general_data(self, text):
@@ -91,8 +92,8 @@ class McLautApi:
             'internetSpeed': self._parse_number(internet_speed_regex, text)
         }
 
-    def _load_balance_data(self, city):
-        response = self._do_post(f"https://bill.mclaut.com/client/{city}/balance", {}, self.cookies)
+    async def _load_balance_data(self, city):
+        response = await self.client.do_post(f"https://bill.mclaut.com/client/{city}/balance", {}, self.cookies)
         return self._parse_balance_data(response.text)
 
     def _parse_balance_data(self, text):
@@ -133,16 +134,3 @@ class McLautApi:
             return result.group(1).strip()
         else:
             return 'N/A'
-
-    @staticmethod
-    def _do_post(url, data, cookies):
-        response = requests.post(
-            url=url,
-            data=data,
-            cookies=cookies,
-            headers={'Content-Type': 'application/x-www-form-urlencoded'}
-        )
-        if response.status_code == 200:
-            return response
-        else:
-            raise Exception(f"Unexpected response for url: {url}, response: {response.status_code} - {response.reason}")

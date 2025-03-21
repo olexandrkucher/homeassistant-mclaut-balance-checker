@@ -2,6 +2,7 @@ import logging
 from datetime import timedelta
 from typing import Any
 
+import requests
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
@@ -20,11 +21,32 @@ class McLautBalanceCheckerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             update_interval=timedelta(minutes=UPDATE_INTERVAL)
         )
         _LOGGER.info("McLautBalanceCheckerCoordinator init with data: %s", credential)
-        self.mclaut_api = McLautApi(credential)
+        self.mclaut_api = McLautApi(credential, AsyncHttpClient(hass))
 
     async def _async_update_data(self):
         try:
-            return self.mclaut_api.load_all_data()
+            return await self.mclaut_api.load_all_data()
         except Exception as ex:
             _LOGGER.error("Error during update data: %s", ex)
             raise ex
+
+
+class AsyncHttpClient:
+    def __init__(self, hass: HomeAssistant):
+        self.hass = hass
+
+    async def do_post(self, url: str, data, cookies) -> Any:
+        return await self.hass.async_add_executor_job(self._do_post, url, data, cookies)
+
+    @staticmethod
+    def _do_post(url, data, cookies):
+        response = requests.post(
+            url=url,
+            data=data,
+            cookies=cookies,
+            headers={'Content-Type': 'application/x-www-form-urlencoded'}
+        )
+        if response.status_code == 200:
+            return response
+        else:
+            raise Exception(f"Unexpected response for url: {url}, response: {response.status_code} - {response.reason}")
