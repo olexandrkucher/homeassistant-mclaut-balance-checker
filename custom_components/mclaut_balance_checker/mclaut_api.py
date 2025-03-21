@@ -1,7 +1,7 @@
 import logging
 import re
 
-from custom_components.mclaut_balance_checker.http_client import AsyncHttpClient
+from .http_client import AsyncHttpClient
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -11,6 +11,9 @@ class City:
         self.city_id = city_id
         self.city_name = city_name
         self.human_readable_city_name = human_readable_city_name
+
+    def __str__(self):
+        return f"City(city_id={self.city_id}, city_name={self.city_name}, human_readable_city_name={self.human_readable_city_name})"
 
     @staticmethod
     def from_dict(data: dict) -> "City":
@@ -28,6 +31,9 @@ class McLautCredentials:
         self.city_id = city_id
         self.city_name = city_name
 
+    def __str__(self):
+        return f"McLautCredentials(username={self.username}, password=****, city_id={self.city_id}, city_name={self.city_name})"
+
 
 class McLautApi:
     def __init__(self, credentials: McLautCredentials, client: AsyncHttpClient):
@@ -39,8 +45,14 @@ class McLautApi:
         if await self._is_logged():
             _LOGGER.info('Existing integration session has been found, no need to login')
         else:
-            response = await self.client.do_post('https://bill.mclaut.com/index.php', self._prepare_login_data(), self.cookies)
+            _LOGGER.info("Login request: %s", self._prepare_login_data())
+            response = await self.client.do_post(
+                'https://bill.mclaut.com/index.php',
+                self._prepare_login_data(),
+                self.cookies
+            )
             response_json = response.json()
+            _LOGGER.info("Login response: %s", response_json)
             if response_json['resultCode'] == 0:
                 raise Exception(f"Login failed: {response_json['resultCode']}")
             else:
@@ -67,6 +79,7 @@ class McLautApi:
         }
 
     async def _is_logged(self):
+        _LOGGER.info("Checking if already logged in: %s", f"https://bill.mclaut.com/client/{self.credentials.city_name}")
         response = await self.client.do_post(f"https://bill.mclaut.com/client/{self.credentials.city_name}", {}, self.cookies)
         return self.credentials.username in response.text
 
@@ -75,16 +88,10 @@ class McLautApi:
         return self._parse_general_data(response.text)
 
     def _parse_general_data(self, text):
-        internet_speed_regex = re.compile(r'<div[^>]*>\s*тариф:\s*</div>\s*<div[^>]*>\D*(\d+)[^<]*</div>',
-                                          re.IGNORECASE)
-        account_number_regex = re.compile(r'<div[^>]*>\s*рахунок:\s*</div>\s*<div[^>]*>\D*(\d+)[^<]*</div>',
-                                          re.IGNORECASE)
-        ip_address_regex = re.compile(
-            r'<div[^>]*>\s*ip-адреса:\s*</div>\s*<div[^>]*>\s*<span[^>]*>\D*(\d+\.\d+\.\d+\.\d+)[^<]*</span>\s*</div>',
-            re.IGNORECASE)
-        balance_regex = re.compile(
-            r'<div[^>]*>\s*баланс\s*</div>\s*<div[^>]*>\s*<span[^>]*>[^>]*</span>\D*([\d .]+)[^<]*</div>',
-            re.IGNORECASE)
+        internet_speed_regex = re.compile(r'<div[^>]*>\s*тариф:\s*</div>\s*<div[^>]*>\D*(\d+)[^<]*</div>', re.IGNORECASE)
+        account_number_regex = re.compile(r'<div[^>]*>\s*рахунок:\s*</div>\s*<div[^>]*>\D*(\d+)[^<]*</div>', re.IGNORECASE)
+        ip_address_regex = re.compile( r'<div[^>]*>\s*ip-адреса:\s*</div>\s*<div[^>]*>\s*<span[^>]*>\D*(\d+\.\d+\.\d+\.\d+)[^<]*</span>\s*</div>', re.IGNORECASE)
+        balance_regex = re.compile( r'<div[^>]*>\s*баланс\s*</div>\s*<div[^>]*>\s*<span[^>]*>[^>]*</span>\D*([\d .]+)[^<]*</div>', re.IGNORECASE)
         return {
             'balance': self._parse_number(balance_regex, text),
             'ipAddress': self._parse_string(ip_address_regex, text),
@@ -97,10 +104,8 @@ class McLautApi:
         return self._parse_balance_data(response.text)
 
     def _parse_balance_data(self, text):
-        balance_regex = re.compile(r'<div[^>]*>\s*на рахунку:\s*</div>\s*<div[^>]*>\s*([^< ]*)\D*([\d .]+)[^<]*</div>',
-                                   re.IGNORECASE)
-        daily_cost_regex = re.compile(r'<div[^>]*>\s*останнє зняття:\s*</div>\s*<div[^>]*>\D*([\d .]+)[^<]*</div>',
-                                      re.IGNORECASE)
+        balance_regex = re.compile(r'<div[^>]*>\s*на рахунку:\s*</div>\s*<div[^>]*>\s*([^< ]*)\D*([\d .]+)[^<]*</div>', re.IGNORECASE)
+        daily_cost_regex = re.compile(r'<div[^>]*>\s*останнє зняття:\s*</div>\s*<div[^>]*>\D*([\d .]+)[^<]*</div>', re.IGNORECASE)
         return {
             'balance': self._parse_number(balance_regex, text),
             'dailyCost': self._parse_number(daily_cost_regex, text)

@@ -8,10 +8,13 @@ import voluptuous
 from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
 
-from custom_components.mclaut_balance_checker import McLautBalanceCheckerCoordinator, DOMAIN
-from custom_components.mclaut_balance_checker.const import USERNAME, PASSWORD, CITY_NAME, CITY_ID
-from custom_components.mclaut_balance_checker.mclaut_api import City
+from .const import DOMAIN, USERNAME, PASSWORD, CITY_ID, CITY_NAME
+from .coordinator import McLautBalanceCheckerCoordinator
+from .mclaut_api import City
 
+CITY_UI_OPTION = "City"
+PASSWORD_UI_OPTION = "Password"
+USERNAME_UI_OPTION = "Username"
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -48,23 +51,25 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(self, user_input=None):
         """Handle the initial step."""
-        if user_input is not None:
-            _LOGGER.info("user_input: %s", user_input)
+        if user_input is None:
+            return self.async_show_form(
+                step_id="user",
+                data_schema=voluptuous.Schema({
+                    voluptuous.Required(USERNAME_UI_OPTION): cv.string,
+                    voluptuous.Required(PASSWORD_UI_OPTION): cv.string,
+                    voluptuous.Required(CITY_UI_OPTION): voluptuous.In(list(self.city_ui_options.keys()))
+                }),
+                errors=self._errors
+            )
 
-            selected_human_name = user_input[CITY_NAME]
-            city = self.city_ui_options[selected_human_name]
-
-            user_input[CITY_ID] = city.city_id
-            user_input[CITY_NAME] = city.city_name
-
-            return self.async_create_entry(title=user_input[USERNAME], data=user_input)
-
-        return self.async_show_form(
-            step_id="user",
-            data_schema=voluptuous.Schema({
-                voluptuous.Required(USERNAME): cv.string,
-                voluptuous.Required(PASSWORD): cv.string,
-                voluptuous.Required(CITY_NAME): voluptuous.In(list(self.city_ui_options.keys()))
-            }),
-            errors=self._errors
+        city = self.city_ui_options[user_input[CITY_UI_OPTION]]
+        _LOGGER.info("user_input: %s; city: %s", user_input, city)
+        return self.async_create_entry(
+            title=user_input[USERNAME],
+            data={
+                USERNAME: user_input[USERNAME_UI_OPTION],
+                PASSWORD: user_input[PASSWORD_UI_OPTION],
+                CITY_ID: city.city_id,
+                CITY_NAME: city.city_name
+            }
         )

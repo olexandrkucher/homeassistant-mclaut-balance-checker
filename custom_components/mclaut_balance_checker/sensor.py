@@ -7,9 +7,8 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceInfo, DeviceEntryType
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from custom_components.mclaut_balance_checker.const import DOMAIN
-from custom_components.mclaut_balance_checker.coordinator import McLautBalanceCheckerCoordinator
-
+from .const import DOMAIN
+from .coordinator import McLautBalanceCheckerCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 
