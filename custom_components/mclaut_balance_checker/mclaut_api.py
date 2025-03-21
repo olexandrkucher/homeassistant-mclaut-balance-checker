@@ -1,7 +1,7 @@
 import logging
 import re
 
-from custom_components.mclaut_balance_checker.coordinator import AsyncHttpClient
+from custom_components.mclaut_balance_checker.http_client import AsyncHttpClient
 
 _LOGGER = logging.getLogger(__name__)
 

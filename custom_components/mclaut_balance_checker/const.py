@@ -1,5 +1,5 @@
 DOMAIN = "mclaut_balance_checker"
-UPDATE_INTERVAL = 300
+UPDATE_INTERVAL = 50
 
 USERNAME = "username"
 PASSWORD = "password"
