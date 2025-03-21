@@ -11,7 +11,6 @@ from custom_components.mclaut_balance_checker.mclaut_api import McLautApi, McLau
 _LOGGER = logging.getLogger(__name__)
 
 
-
 class McLautBalanceCheckerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     def __init__(self, hass: HomeAssistant, credential: McLautCredentials):
         super().__init__(
@@ -24,4 +23,8 @@ class McLautBalanceCheckerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self.mclaut_api = McLautApi(credential)
 
     async def _async_update_data(self):
-        return self.mclaut_api.load_all_data()
+        try:
+            return self.mclaut_api.load_all_data()
+        except Exception as ex:
+            _LOGGER.error("Error during update data: %s", ex)
+            raise ex

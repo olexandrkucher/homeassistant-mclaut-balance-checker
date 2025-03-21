@@ -4,9 +4,7 @@ from typing import Any
 import homeassistant.helpers.config_validation as cv
 import voluptuous
 from homeassistant import config_entries
-from homeassistant.config_entries import ConfigFlowResult
 from homeassistant.core import HomeAssistant
-from homeassistant.data_entry_flow import FlowResult
 
 from custom_components.mclaut_balance_checker import McLautBalanceCheckerCoordinator, DOMAIN
 from custom_components.mclaut_balance_checker.const import USERNAME, PASSWORD, CITY_ID, CITY_NAME

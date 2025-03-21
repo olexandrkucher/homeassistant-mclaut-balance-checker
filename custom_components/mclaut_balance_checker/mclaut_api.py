@@ -1,6 +1,9 @@
+import logging
 import re
 
 import requests
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class McLautCredentials:
@@ -18,7 +21,7 @@ class McLautApi:
 
     def login(self):
         if self._is_logged():
-            print('Existing integration session has been found, no need to login')
+            _LOGGER.info('Existing integration session has been found, no need to login')
         else:
             response = self._do_post('https://bill.mclaut.com/index.php', self._prepare_login_data(), self.cookies)
             response_json = response.json()
@@ -30,7 +33,7 @@ class McLautApi:
     def load_all_data(self):
         if not self._is_logged():
             self.login()
-            print('Integration has been logged in before loading data')
+            _LOGGER.info('Integration has been logged in before loading data')
 
         general_data = self._load_general_data(self.credentials.city_name)
         balance_data = self._load_balance_data(self.credentials.city_name)
