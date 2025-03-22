@@ -29,10 +29,11 @@ class McLautSensor(SensorEntity):
         self.coordinator = coordinator
         self.description = description
 
+        username = entry.data.get(USERNAME)
         self._attr_icon = description['icon']
-        self._attr_name = f"{description['name']}"
+        self._attr_name = f"{username} {description['name']}"
         self._attr_native_unit_of_measurement = description['unit']
-        self._attr_unique_id = f"{DOMAIN}_{entry.data.get(USERNAME)}_{description['key']}"
+        self._attr_unique_id = f"{DOMAIN}_{username}_{description['key']}"
 
     @property
     def native_value(self) -> StateType | date | datetime | Decimal:
