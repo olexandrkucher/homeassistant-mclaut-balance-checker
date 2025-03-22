@@ -20,7 +20,7 @@ class City:
         return City(
             city_id=data["city_id"],
             city_name=data["city_name"],
-            human_readable_city_name=data["human_readable_city_name"]
+            human_readable_city_name=data["human_readable_city_name"],
         )
 
 
@@ -43,7 +43,7 @@ class McLautApi:
 
     async def login(self):
         if await self._is_logged():
-            _LOGGER.info("Existing integration session has been found, no need to login")
+            _LOGGER.info("Existing session has been found, no need to login")
         else:
             _LOGGER.debug("Integration is not logged in, trying to login")
             response = await self.client.do_post(
@@ -70,47 +70,45 @@ class McLautApi:
         balance_data = await self._load_balance_data(self.credentials.city_name)
         _LOGGER.debug("Balance data: %s", balance_data)
 
+        balance = general_data["balance"]
+        daily_cost = balance_data["dailyCost"]
         return {
-            "dailyCost": balance_data["dailyCost"],
+            "dailyCost": daily_cost,
             "accountNumber": general_data["accountNumber"],
             "internetSpeed": general_data["internetSpeed"],
-            "balance": general_data["balance"],
+            "balance": balance,
             "ipAddress": general_data["ipAddress"],
-            "daysOfInternet": round(general_data["balance"] / balance_data["dailyCost"]) - 2
+            "daysOfInternet": round(balance / daily_cost) - 2,
         }
 
     async def _is_logged(self):
         response = await self.client.do_post(
             f"https://bill.mclaut.com/client/{self.credentials.city_name}",
             {},
-            self.cookies
+            self.cookies,
         )
         return self.credentials.username in response.text
 
     async def _load_general_data(self, city):
-        response = await self.client.do_post(
-            f"https://bill.mclaut.com/client/{city}",
-            {},
-            self.cookies
-        )
+        response = await self.client.do_post(f"https://bill.mclaut.com/client/{city}", {}, self.cookies)
         return self._parse_general_data(response.text)
 
     def _parse_general_data(self, text):
         internet_speed_regex = re.compile(
-            r'<div[^>]*>\s*тариф:\s*</div>\s*<div[^>]*>\D*(\d+)[^<]*</div>',
-            re.IGNORECASE
+            r"<div[^>]*>\s*тариф:\s*</div>\s*<div[^>]*>\D*(\d+)[^<]*</div>",
+            re.IGNORECASE,
         )
         account_number_regex = re.compile(
-            r'<div[^>]*>\s*рахунок:\s*</div>\s*<div[^>]*>\D*(\d+)[^<]*</div>',
-            re.IGNORECASE
+            r"<div[^>]*>\s*рахунок:\s*</div>\s*<div[^>]*>\D*(\d+)[^<]*</div>",
+            re.IGNORECASE,
         )
         ip_address_regex = re.compile(
-            r'<div[^>]*>\s*ip-адреса:\s*</div>\s*<div[^>]*>\s*<span[^>]*>\D*(\d+\.\d+\.\d+\.\d+)[^<]*</span>\s*</div>',
-            re.IGNORECASE
+            r"<div[^>]*>\s*ip-адреса:\s*</div>\s*<div[^>]*>\s*<span[^>]*>\D*(\d+\.\d+\.\d+\.\d+)[^<]*</span>\s*</div>",
+            re.IGNORECASE,
         )
         balance_regex = re.compile(
-            r'<div[^>]*>\s*баланс\s*</div>\s*<div[^>]*>\s*<span[^>]*>[^>]*</span>\D*([\d .]+)[^<]*</div>',
-            re.IGNORECASE
+            r"<div[^>]*>\s*баланс\s*</div>\s*<div[^>]*>\s*<span[^>]*>[^>]*</span>\D*([\d .]+)[^<]*</div>",
+            re.IGNORECASE,
         )
         return {
             "balance": self._parse_number(balance_regex, text),
@@ -120,21 +118,17 @@ class McLautApi:
         }
 
     async def _load_balance_data(self, city):
-        response = await self.client.do_post(
-            f"https://bill.mclaut.com/client/{city}/balance",
-            {},
-            self.cookies
-        )
+        response = await self.client.do_post(f"https://bill.mclaut.com/client/{city}/balance", {}, self.cookies)
         return self._parse_balance_data(response.text)
 
     def _parse_balance_data(self, text):
         balance_regex = re.compile(
-            r'<div[^>]*>\s*на рахунку:\s*</div>\s*<div[^>]*>\s*([^< ]*)\D*([\d .]+)[^<]*</div>',
-            re.IGNORECASE
+            r"<div[^>]*>\s*на рахунку:\s*</div>\s*<div[^>]*>\s*([^< ]*)\D*([\d .]+)[^<]*</div>",
+            re.IGNORECASE,
         )
         daily_cost_regex = re.compile(
-            r'<div[^>]*>\s*останнє зняття:\s*</div>\s*<div[^>]*>\D*([\d .]+)[^<]*</div>',
-            re.IGNORECASE
+            r"<div[^>]*>\s*останнє зняття:\s*</div>\s*<div[^>]*>\D*([\d .]+)[^<]*</div>",
+            re.IGNORECASE,
         )
         return {
             "balance": self._parse_number(balance_regex, text),

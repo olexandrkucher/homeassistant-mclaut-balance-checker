@@ -48,5 +48,5 @@ SENSORS = [
         "name": "Days of Internet",
         "unit": None,
         "icon": "mdi:counter",
-    }
+    },
 ]

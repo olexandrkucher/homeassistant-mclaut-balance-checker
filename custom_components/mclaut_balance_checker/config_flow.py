@@ -39,11 +39,13 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is None:
             return self.async_show_form(
                 step_id="user",
-                data_schema=Schema({
-                    Required(USERNAME_UI_OPTION): cv.string,
-                    Required(PASSWORD_UI_OPTION): cv.string,
-                    Required(CITY_UI_OPTION): In(list(self.city_ui_options.keys()))
-                }),
+                data_schema=Schema(
+                    {
+                        Required(USERNAME_UI_OPTION): cv.string,
+                        Required(PASSWORD_UI_OPTION): cv.string,
+                        Required(CITY_UI_OPTION): In(list(self.city_ui_options.keys())),
+                    }
+                ),
                 errors=self._errors,
             )
 
