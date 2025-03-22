@@ -90,7 +90,9 @@ class McLautApi:
         return self.credentials.username in response.text
 
     async def _load_general_data(self, city):
-        response = await self.client.do_post(f"https://bill.mclaut.com/client/{city}", {}, self.cookies)
+        response = await self.client.do_post(
+            f"https://bill.mclaut.com/client/{city}", {}, self.cookies
+        )
         return self._parse_general_data(response.text)
 
     def _parse_general_data(self, text):
@@ -118,7 +120,9 @@ class McLautApi:
         }
 
     async def _load_balance_data(self, city):
-        response = await self.client.do_post(f"https://bill.mclaut.com/client/{city}/balance", {}, self.cookies)
+        response = await self.client.do_post(
+            f"https://bill.mclaut.com/client/{city}/balance", {}, self.cookies
+        )
         return self._parse_balance_data(response.text)
 
     def _parse_balance_data(self, text):
