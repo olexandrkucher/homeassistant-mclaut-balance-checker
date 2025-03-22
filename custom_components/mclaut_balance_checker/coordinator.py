@@ -26,5 +26,5 @@ class McLautBalanceCheckerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         try:
             return await self.mclaut_api.load_all_data()
         except Exception as ex:
-            _LOGGER.error("Error during update data: %s", ex)
+            _LOGGER.error('Unexpected error happened while refreshing data: %s', ex)
             raise ex

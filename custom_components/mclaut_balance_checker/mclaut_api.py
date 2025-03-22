@@ -16,11 +16,11 @@ class City:
         return f"City(city_id={self.city_id}, city_name={self.city_name}, human_readable_city_name={self.human_readable_city_name})"
 
     @staticmethod
-    def from_dict(data: dict) -> "City":
+    def from_dict(data: dict) -> 'City':
         return City(
-            city_id=data["city_id"],
-            city_name=data["city_name"],
-            human_readable_city_name=data["human_readable_city_name"]
+            city_id=data['city_id'],
+            city_name=data['city_name'],
+            human_readable_city_name=data['human_readable_city_name']
         )
 
 
@@ -45,14 +45,15 @@ class McLautApi:
         if await self._is_logged():
             _LOGGER.info('Existing integration session has been found, no need to login')
         else:
-            _LOGGER.info("Login request: %s", self._prepare_login_data())
+            _LOGGER.debug('Integration is not logged in, trying to login')
             response = await self.client.do_post(
                 'https://bill.mclaut.com/index.php',
                 self._prepare_login_data(),
                 self.cookies
             )
+
             response_json = response.json()
-            _LOGGER.info("Login response: %s", response_json)
+            _LOGGER.info('Loging request completed with response: %s', response_json)
             if response_json['resultCode'] == 0:
                 raise Exception(f"Login failed: {response_json['resultCode']}")
             else:
@@ -64,22 +65,21 @@ class McLautApi:
             _LOGGER.info('Integration has been logged in before loading data')
 
         general_data = await self._load_general_data(self.credentials.city_name)
+        _LOGGER.debug('General data: %s', general_data)
+
         balance_data = await self._load_balance_data(self.credentials.city_name)
+        _LOGGER.debug('Balance data: %s', balance_data)
+
         return {
-            'staticData': {
-                'dailyCost': balance_data['dailyCost'],
-                'accountNumber': general_data['accountNumber'],
-                'internetSpeed': general_data['internetSpeed']
-            },
-            'dynamicData': {
-                'balance': general_data['balance'],
-                'ipAddress': general_data['ipAddress'],
-                'daysOfInternet': round(general_data['balance'] / balance_data['dailyCost']) - 2
-            }
+            'dailyCost': balance_data['dailyCost'],
+            'accountNumber': general_data['accountNumber'],
+            'internetSpeed': general_data['internetSpeed'],
+            'balance': general_data['balance'],
+            'ipAddress': general_data['ipAddress'],
+            'daysOfInternet': round(general_data['balance'] / balance_data['dailyCost']) - 2
         }
 
     async def _is_logged(self):
-        _LOGGER.info("Checking if already logged in: %s", f"https://bill.mclaut.com/client/{self.credentials.city_name}")
         response = await self.client.do_post(f"https://bill.mclaut.com/client/{self.credentials.city_name}", {}, self.cookies)
         return self.credentials.username in response.text
 
@@ -115,7 +115,7 @@ class McLautApi:
         return {
             'login': f'"{self.credentials.username}"',
             'pass': f'"{self.credentials.password}"',
-            'city': f'"{self.credentials.city_id}"',
+            'city': f'{self.credentials.city_id}',
             'query': 'ajax',
             'app': 'client',
             'module': 'auth',

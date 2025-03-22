@@ -19,7 +19,6 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up integration from a config entry (UI flow or HACS install)."""
-
     try:
         credentials = McLautCredentials(
             username=entry.data.get(USERNAME),
@@ -37,7 +36,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         await hass.config_entries.async_forward_entry_setups(entry, [Platform.SENSOR])
         return True
     except Exception as ex:
-        _LOGGER.error("Error during setup integration: %s", ex)
+        _LOGGER.error('Unexpected error happened while setting up the integration: %s', ex)
         return False
 
 

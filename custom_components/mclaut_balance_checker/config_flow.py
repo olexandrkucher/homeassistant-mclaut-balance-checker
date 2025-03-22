@@ -1,35 +1,18 @@
 import json
 import logging
 import os
-from typing import Any
 
 import homeassistant.helpers.config_validation as cv
 import voluptuous
 from homeassistant import config_entries
-from homeassistant.core import HomeAssistant
 
 from .const import DOMAIN, USERNAME, PASSWORD, CITY_ID, CITY_NAME
-from .coordinator import McLautBalanceCheckerCoordinator
 from .mclaut_api import City
 
 CITY_UI_OPTION = "City"
 PASSWORD_UI_OPTION = "Password"
 USERNAME_UI_OPTION = "Username"
 _LOGGER = logging.getLogger(__name__)
-
-
-async def validate_input(hass: HomeAssistant, data: dict) -> dict[str, Any]:
-    """Validate the user input allows us to connect.
-
-    Data has the keys from USER_SCHEMA with values provided by the user.
-    """
-
-    _LOGGER.info("validating input: %s", data)
-
-    coordinator = McLautBalanceCheckerCoordinator(hass, data)
-    # await coordinator.async_validate_input()
-
-    return {"title": "McLaut Balance Checker"}
 
 
 def load_cities_from_json() -> list[City]:
@@ -41,7 +24,6 @@ def load_cities_from_json() -> list[City]:
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for My HACS App."""
-
     VERSION = 1
 
     def __init__(self):
@@ -62,12 +44,14 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 errors=self._errors
             )
 
+        username = user_input[USERNAME_UI_OPTION]
         city = self.city_ui_options[user_input[CITY_UI_OPTION]]
-        _LOGGER.info("user_input: %s; city: %s", user_input, city)
+        _LOGGER.info('Integration setup started for user=%s in city=%s', username, city)
+
         return self.async_create_entry(
-            title=user_input[USERNAME_UI_OPTION],
+            title=username,
             data={
-                USERNAME: user_input[USERNAME_UI_OPTION],
+                USERNAME: username,
                 PASSWORD: user_input[PASSWORD_UI_OPTION],
                 CITY_ID: city.city_id,
                 CITY_NAME: city.city_name
