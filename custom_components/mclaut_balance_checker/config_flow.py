@@ -3,8 +3,8 @@ import logging
 import os
 
 import homeassistant.helpers.config_validation as cv
-import voluptuous
 from homeassistant import config_entries
+from voluptuous import Schema, Required, In
 
 from .const import DOMAIN, USERNAME, PASSWORD, CITY_ID, CITY_NAME
 from .mclaut_api import City
@@ -24,29 +24,32 @@ def load_cities_from_json() -> list[City]:
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for My HACS App."""
+
     VERSION = 1
 
     def __init__(self):
         self._errors = {}
         self.city_options = load_cities_from_json()
-        self.city_ui_options = {city.human_readable_city_name: city for city in self.city_options}
+        self.city_ui_options = {
+            city.human_readable_city_name: city for city in self.city_options
+        }
 
     async def async_step_user(self, user_input=None):
         """Handle the initial step."""
         if user_input is None:
             return self.async_show_form(
                 step_id="user",
-                data_schema=voluptuous.Schema({
-                    voluptuous.Required(USERNAME_UI_OPTION): cv.string,
-                    voluptuous.Required(PASSWORD_UI_OPTION): cv.string,
-                    voluptuous.Required(CITY_UI_OPTION): voluptuous.In(list(self.city_ui_options.keys()))
+                data_schema=Schema({
+                    Required(USERNAME_UI_OPTION): cv.string,
+                    Required(PASSWORD_UI_OPTION): cv.string,
+                    Required(CITY_UI_OPTION): In(list(self.city_ui_options.keys()))
                 }),
-                errors=self._errors
+                errors=self._errors,
             )
 
         username = user_input[USERNAME_UI_OPTION]
         city = self.city_ui_options[user_input[CITY_UI_OPTION]]
-        _LOGGER.info('Integration setup started for user=%s in city=%s', username, city)
+        _LOGGER.info("Integration setup started for user=%s in city=%s", username, city)
 
         return self.async_create_entry(
             title=username,
@@ -54,6 +57,6 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 USERNAME: username,
                 PASSWORD: user_input[PASSWORD_UI_OPTION],
                 CITY_ID: city.city_id,
-                CITY_NAME: city.city_name
-            }
+                CITY_NAME: city.city_name,
+            },
         )

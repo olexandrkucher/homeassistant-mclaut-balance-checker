@@ -24,7 +24,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             username=entry.data.get(USERNAME),
             password=entry.data.get(PASSWORD),
             city_id=entry.data.get(CITY_ID),
-            city_name=entry.data.get(CITY_NAME)
+            city_name=entry.data.get(CITY_NAME),
         )
 
         mclaut_coordinator = McLautBalanceCheckerCoordinator(hass, credentials)
@@ -36,13 +36,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         await hass.config_entries.async_forward_entry_setups(entry, [Platform.SENSOR])
         return True
     except Exception as ex:
-        _LOGGER.error('Unexpected error happened while setting up the integration: %s', ex)
+        _LOGGER.error("Unexpected error happened while set up the integration: %s", ex)
         return False
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = await hass.config_entries.async_unload_platforms(entry, [Platform.SENSOR])
-    if unload_ok:
+    status = await hass.config_entries.async_unload_platforms(entry, [Platform.SENSOR])
+    if status:
         hass.data[DOMAIN].pop(entry.entry_id)
-    return unload_ok
+    return status

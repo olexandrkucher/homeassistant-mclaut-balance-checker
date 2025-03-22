@@ -18,7 +18,7 @@ class McLautBalanceCheckerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             hass=hass,
             name=DOMAIN,
             logger=_LOGGER,
-            update_interval=timedelta(minutes=UPDATE_INTERVAL)
+            update_interval=timedelta(minutes=UPDATE_INTERVAL),
         )
         self.mclaut_api = McLautApi(credentials, AsyncHttpClient(hass))
 
@@ -26,5 +26,5 @@ class McLautBalanceCheckerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         try:
             return await self.mclaut_api.load_all_data()
         except Exception as ex:
-            _LOGGER.error('Unexpected error happened while refreshing data: %s', ex)
+            _LOGGER.error("Unexpected error happened while refreshing data: %s", ex)
             raise ex
