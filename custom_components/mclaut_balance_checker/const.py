@@ -1,5 +1,7 @@
+from datetime import timedelta
+
 DOMAIN = "mclaut_balance_checker"
-UPDATE_INTERVAL = 50
+UPDATE_INTERVAL = timedelta(minutes=50)
 
 USERNAME = "username"
 PASSWORD = "password"

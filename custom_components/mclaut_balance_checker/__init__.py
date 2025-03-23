@@ -3,18 +3,12 @@ import logging
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.typing import ConfigType
 
-from .const import DOMAIN, USERNAME, PASSWORD, CITY_ID, CITY_NAME
+from .const import DOMAIN, USERNAME, PASSWORD, CITY_ID, CITY_NAME, UPDATE_INTERVAL
 from .coordinator import McLautBalanceCheckerCoordinator
 from .mclaut_api import McLautCredentials
 
 _LOGGER = logging.getLogger(__name__)
-
-
-async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
-    """Set up integration from configuration.yaml (optional)."""
-    return True  # or False if you want to block YAML-only setup
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -27,7 +21,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             city_name=entry.data.get(CITY_NAME),
         )
 
-        mclaut_coordinator = McLautBalanceCheckerCoordinator(hass, credentials)
+        mclaut_coordinator = McLautBalanceCheckerCoordinator(
+            hass, DOMAIN, UPDATE_INTERVAL, credentials
+        )
         await mclaut_coordinator.async_config_entry_first_refresh()
 
         hass.data.setdefault(DOMAIN, {})

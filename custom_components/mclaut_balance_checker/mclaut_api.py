@@ -41,6 +41,9 @@ class McLautApi:
         self.client = client
         self.credentials = credentials
 
+    def __str__(self):
+        return f"McLautApi(credentials={self.credentials})"
+
     async def login(self):
         if await self._is_logged():
             _LOGGER.info("Existing session has been found, no need to login")
