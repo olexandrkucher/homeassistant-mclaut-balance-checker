@@ -30,6 +30,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.data[DOMAIN][entry.entry_id] = mclaut_coordinator
 
         await hass.config_entries.async_forward_entry_setups(entry, [Platform.SENSOR])
+        _LOGGER.info("Integration %s has been set up successfully", mclaut_coordinator)
         return True
     except Exception as ex:
         _LOGGER.error("Unexpected error happened while set up the integration: %s", ex)

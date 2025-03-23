@@ -3,7 +3,7 @@ from datetime import timedelta
 from typing import Any
 
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .http_client import AsyncHttpClient
 from .mclaut_api import McLautApi, McLautCredentials
@@ -30,10 +30,10 @@ class McLautBalanceCheckerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     def __str__(self):
         return f"McLautBalanceCheckerCoordinator(domain={self.name}, update_interval={self.update_interval}, credentials={self.mclaut_api.credentials})"
 
-    async def _async_update_data(self):
+    async def _async_update_data(self) -> dict[str, Any]:
         try:
             _LOGGER.debug("Updating data for %s", self)
             return await self.mclaut_api.load_all_data()
         except Exception as ex:
             _LOGGER.error("Unexpected error happened while refreshing data: %s", ex)
-            raise ex
+            raise UpdateFailed(f"Update failed: {ex}")

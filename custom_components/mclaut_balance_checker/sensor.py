@@ -7,6 +7,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN, USERNAME, SENSORS
 
@@ -23,11 +24,12 @@ async def async_setup_entry(
         entities.append(McLautSensor(entry, coordinator, description))
         _LOGGER.debug("Sensor created: %s", description)
     async_add_entities(entities)
+    _LOGGER.info("Sensors have been set up successfully: %s", entities)
 
 
-class McLautSensor(SensorEntity):
+class McLautSensor(CoordinatorEntity, SensorEntity):
     def __init__(self, entry, coordinator, description):
-        super().__init__()
+        super().__init__(coordinator=coordinator)
         self.coordinator = coordinator
         self.description = description
 
